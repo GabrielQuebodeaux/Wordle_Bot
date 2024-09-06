@@ -70,8 +70,7 @@ class WordleBot:
         for guess in range(1, 7):
             if solved:
                 break
-            first = guess == 1
-            word = self.choose_word(first)
+            word = self.choose_word()
             self.guess(word)
             for col in range(1, 6):
                 x_path = f"//*[@id=\"wordle-app-game\"]/div[1]/div/div[{guess}]/div[{col}]/div"
@@ -119,9 +118,7 @@ class WordleBot:
                     self.word_bank.remove(word)
                     break
     
-    def choose_word(self, first):
-        # if first:
-        #     return "slate"
+    def choose_word(self):
         letter_usage = [0 for x in self.unknown_letters]
         for word in self.word_bank:
             for letter in word:
@@ -141,8 +138,6 @@ class WordleBot:
                 max = score
             elif score == max:
                 best.append(word)
-        print(best)
-        print(max)
         return random.choice(best)
 
 wait_for_element(play_button_x_path, 5)
